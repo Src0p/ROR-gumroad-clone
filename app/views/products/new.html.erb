@@ -1,0 +1,75 @@
+<div class="flex h-screen bg-gray-100">
+  <%= render "shared/sidebar" %>
+
+  <div class="container mx-auto p-4" >
+    <!-- Page Title -->
+    <h1 class="text-3xl font-bold text-[black] mb-6">Create Product</h1>
+
+    <%= form_with model: @product, class:"grid grid-cols-1 gap-6" do |f| %>
+      <!-- Title -->
+      <div class="p-2">
+        <%= f.text_field :name, placeholder:"Product Title", class:"block bg-[#f6f6f6] w-full rounded-md border-gray-300 shadow-sm focus:border-[#8c0327] focus:ring-[#8c0327] focus:ring-opacity-50 p-2" %>
+      </div>
+
+      <!-- Category -->
+      <div class="p-2">
+        <select id="category" name="category" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-[#8c0327] focus:ring-[#8c0327] focus:ring-opacity-50 p-2" style="background-color: #f6f6f6;">
+          <option value="">Select a category</option>
+          <option>Music</option>
+          <option>Sports</option>
+          <option>Arts</option>
+          <option>Technology</option>
+        </select>
+      </div>
+
+      <!-- Description and Image Upload -->
+      <div class="p-2 grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Description -->
+        <div>
+          <textarea id="description" name="description" rows="3" placeholder="Product Description" class="block w-full h-48 rounded-md border-gray-300 shadow-sm focus:border-[#8c0327] focus:ring-[#8c0327] focus:ring-opacity-50 p-2" style="background-color: #f6f6f6;"></textarea>
+        </div>
+
+        <!-- Image Upload -->
+        <div>
+          <label for="image-upload" class="block w-full h-48 border-2 border-dashed border-gray-300 rounded-md cursor-pointer flex flex-col items-center justify-center bg-[#f6f6f6] hover:bg-gray-50">
+            <div class="text-center">
+              <div class="mb-2">
+                <button type="button" class="bg-[#8c0327] hover:bg-[#6b0220] text-white rounded-full py-2 px-4">Select from the computer</button>
+              </div>
+              <p class="text-gray-500">or drag photo here</p>
+              <p class="text-gray-500 text-sm mt-1">PNG, JPG, SVG</p>
+            </div>
+          </label>
+          <input id="image-upload" name="image" type="file" accept="image/*" class="sr-only">
+        </div>
+      </div>
+
+      <!-- Price -->
+      <div class="p-2">
+        <%= f.text_field :price, placeholder:"Price your product", type:"number", class:"block bg:[#f6f6f6] w-full rounded-md border-gray-300 shadow-sm focus:border-[#8c0327] focus:ring-[#8c0327] focus:ring-opacity-50 p-2" %>
+      </div>
+
+      <!-- Status and Tags -->
+      <div class="p-2 grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Status -->
+        <div class="flex items-center bg-[#f6f6f6] rounded-md">
+          <select id="status" name="status" class="block w-full h-12 rounded-md border-gray-300 shadow-sm focus:border-[#8c0327] focus:ring-[#8c0327] focus:ring-opacity-50" style="background-color: #f6f6f6; padding: 0;">
+            <option value="">Select Status</option>
+            <option value="active">Active</option>
+            <option value="inactive">Inactive</option>
+          </select>
+        </div>
+
+        <!-- Tags -->
+        <div>
+          <input type="text" id="tags" name="tags" placeholder="Tags (comma-separated)" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-[#8c0327] focus:ring-[#8c0327] focus:ring-opacity-50 h-12" style="background-color: #f6f6f6;">
+        </div>
+      </div>
+
+      <!-- Registration Button -->
+      <div class="col-span-full mt-6 p-2">
+        <%= f.submit "Create Product", class:"block w-full bg-[#8c0327] hover:bg-[#6b0220] text-white font-bold py-3 px-4 rounded-full" %>
+      </div>
+    <% end %>
+  </div>
+<div>

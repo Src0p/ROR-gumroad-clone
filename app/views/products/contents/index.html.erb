@@ -1,0 +1,73 @@
+<div class="flex h-screen bg-gray-100">
+  <%= render "shared/sidebar" %>
+  <%= form_with model: @product, data: { controller:"file-picker" } , class: "flex flex-col flex-1" do |form| %>
+      <div class="sticky top-0 bg-gray-200 p-12 border-b border-gray-700">
+
+        <div class="w-full flex items-center justify-between">
+          <span class="text-2xl tracking-wide text-slate-600 font-normal"><%= @product.name %></span>
+          <div class="flex">
+            <% if @product.publish?  %>
+              <%= link_to "Unpublish", product_unpublish_path(@product), class: "px-2 py-1 text-blue-700 font-semibold", data: {"turbo-method": :put } %>
+            <% else %>
+              <%= link_to "Publish", product_publish_path(@product) , class:"px-2 py-1 text-blue-700 font-semibold", data: {"turbo-method": :put } %>
+            <% end %>
+            <%= form.submit "Save Changes", class:"hover:shadow-form cursor-pointer w-full rounded-md bg-[#6A64F1] py-1 px-3 text-center text-base font-semibold text-white outline-none" %>
+          </div>
+        </div>
+
+        <div class="flex mt-10">
+          <div class="">
+            <%= link_to "Product", edit_product_path(@product), class:controller_name == "products" ? active_tab_class : inactive_tab_class %>
+          </div>
+          <div class="ml-4">
+            <%= link_to "Content", product_contents_path(@product), class:controller_name == "contents" ? active_tab_class : inactive_tab_class  %>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-12">
+
+        <div class="flex flex-col">  
+          <span class="text-xl font-bold">Content Delivery</span>
+          <p class="mt-1 text-sm leading-6 text-gray-600">Upload the Content/Files that you want to sell.</p>
+        </div>
+
+        <!-- Content Card -->
+        <%= turbo_frame_tag "uploaded_files" do %>
+          <% @contents.each do |content| %>
+            <%= render UploadFileComponent.new(name: content.name, file_type:content.file_type, file_size:content.file_size) %>
+          <% end %>
+        <% end %>
+
+      <div class="mb-6 pt-4">
+        <div class="mb-8">
+          <input data-file-picker-target="file-input"
+                 type="file" multiple name="file"
+                  id="file"
+                  class="sr-only"
+                  data-action="change->file-picker#uploadFiles"
+          />
+          <label for="file"
+                 class="relative flex min-h-[200px] max-w-3xl items-center justify-center rounded-md border border-dashed border-[#e0e0e0] p-12 text-center"
+                 data-file-picker-target="button"
+                 data-action="click->file-picker#open"
+            >
+              <div>
+                  <span class="mb-2 block text-xl font-semibold text-[#07074D]">
+                      Drop files here
+                  </span>
+                  <span class="mb-2 block text-base font-medium text-[#6B7280]">
+                      Or
+                  </span>
+                  <span
+                      class="inline-flex rounded border border-[#e0e0e0] py-2 px-7 text-base font-medium text-[#07074D]">
+                      Browse
+                  </span>
+              </div>
+          </label>
+        </div>
+      </div>
+
+      </div>
+    <% end %>
+</div>
